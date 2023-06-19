@@ -3,17 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//This is a line of code
-public enum GameState
-{
-    Start,
-    Won,
-    Lost,
-    Player1,
-    Player2,
-    Player3,
-    Player4
-}
+/*
+ (If there is a space between points it means it's a different system)
+ What needs to still be done: (In order of importance/what relies on one another)
+
+-Difficulty Selection
+-Flooding: Needs to reflect on the watermeter and it needs to flood/sink the correct tile/flooding deck needs to work
+^Will have a branch
+
+-Spawning the player pawns and the players representation
+^Will have a branch
+
+-A bool to keep track of whether player 1 is playing or player 2 (only 2 players)
+ and the working player turn system
+^Will have a branch
+
+-Movement options/system: (Higly unlikely but arrow movement).
+                   Click a pawn and be able to see where they are allowed to move (highlight the next possible moves).
+                   Click pawn then click where you want it to go.
+^Will have a branch
+
+Misc:
+-The treasure deck needs to be made
+-Treasure card functions
+-Waters rise functions
+-Special character functions
+-Win and lose conditions
+ */
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +38,9 @@ public class GameManager : MonoBehaviour
     private List<GameObject> floodDeck = new List<GameObject>(); //Same as above but for the flooding cards
     public Stack<GameObject> floodStack = new Stack<GameObject>(); //The actual deck representation for the flood deck. Stack to use Pop and Push (LIFO - for a deck)
     public List<GameObject> discardedFloodCards = new List<GameObject>(); //List of cards that have been pulled from the flooding deck (Popped) gets shuffled and pushed back onto the stack
-    public GameState gameState;
 
+    public GameObject player1;
+    public GameObject player2;
     public enum PointState //An enum to define the different states a point can be in
     {
         Empty,
@@ -32,7 +49,7 @@ public class GameManager : MonoBehaviour
         Sunk
     }
 
-    public enum PlayerPawnHere
+    public enum PlayerPawnHere //Currently is actually incorrect because more than one pawn can be on a tile at once
     {
         Red,
         White,
@@ -65,8 +82,6 @@ public class GameManager : MonoBehaviour
     {
         Board = new BoardPoint[6, 6]; //Initializes the Board to be a 2D array of 6 rows and 6 columns
 
-        gameState = GameState.Start;
-
         createIslandDeck();
         shuffleIslands();
         populateBoard();
@@ -74,7 +89,7 @@ public class GameManager : MonoBehaviour
         shuffleFlood();
         createFloodStack();
 
-        //DisplayBoard(Board);
+        DisplayBoard(Board);
     }
 
     
@@ -133,7 +148,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void flood() //Prototype, all flooding related logic goes here
+    public void flood() //Prototype, all flooding related logic goes here. Has to still actually flood the corresponding tile.
     {
         discardedFloodCards.Add(floodStack.Pop()); //Only pops from the stack and adds to the discard list so far
     }
