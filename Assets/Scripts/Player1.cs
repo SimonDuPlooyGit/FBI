@@ -26,6 +26,34 @@ public class Player1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (pawn.name == "Red")
+        {
+            canShoreTwice = true;
+
+        }
+        else if (pawn.name == "Blue")
+        {
+            moveToAnyTile = true;
+
+        }
+        else if (pawn.name == "Green")
+        {
+            moveAndShoreDiagonally = true;
+
+        }
+        else if (pawn.name == "White")
+        {
+            canGiveCardsFar = true;
+
+        }
+        else if (pawn.name == "Yellow")
+        {
+            moveOtherPlayerTwoSpaces = true;
+
+        }
+        else if (pawn.name == "Black")
+        {
+            canDive = true;
+        }
     }
 }
