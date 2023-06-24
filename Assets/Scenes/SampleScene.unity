@@ -574,6 +574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   islandTileDeck: []
   discardedFloodCards: []
+  playerPawns: []
   player1: {fileID: 1344333815}
   player2: {fileID: 754858626}
 --- !u!224 &241978898
@@ -911,6 +912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 754858627}
+  - component: {fileID: 754858628}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -933,6 +935,26 @@ Transform:
   m_Father: {fileID: 241978898}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &754858628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754858626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b72b008ed83b9478b49f885bcc4c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawn: {fileID: 0}
+  pawnPosition: {x: 0, y: 0}
+  moveAndShoreDiagonally: 0
+  moveToAnyTile: 0
+  moveOtherPlayerTwoSpaces: 0
+  canDive: 0
+  canShoreTwice: 0
+  canGiveCardsFar: 0
 --- !u!1 &770818935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,6 +1918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1344333816}
+  - component: {fileID: 1344333817}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1918,6 +1941,26 @@ Transform:
   m_Father: {fileID: 241978898}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1344333817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344333815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c88fe8a79d402b4b9d70557ad1a1b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawn: {fileID: 0}
+  pawnPosition: {x: 0, y: 0}
+  moveAndShoreDiagonally: 0
+  moveToAnyTile: 0
+  moveOtherPlayerTwoSpaces: 0
+  canDive: 0
+  canShoreTwice: 0
+  canGiveCardsFar: 0
 --- !u!1 &1401808430
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 /*
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> floodDeck = new List<GameObject>(); //Same as above but for the flooding cards
     public Stack<GameObject> floodStack = new Stack<GameObject>(); //The actual deck representation for the flood deck. Stack to use Pop and Push (LIFO - for a deck)
     public List<GameObject> discardedFloodCards = new List<GameObject>(); //List of cards that have been pulled from the flooding deck (Popped) gets shuffled and pushed back onto the stack
+    public List<GameObject> playerPawns = new List<GameObject>();
 
     public GameObject player1;
     public GameObject player2;
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
         Blue,
         Black,
         Green,
+        Double,
         None
     }
 
@@ -88,8 +91,9 @@ public class GameManager : MonoBehaviour
         createFloodDeck();
         shuffleFlood();
         createFloodStack();
-
-        DisplayBoard(Board);
+        //DisplayBoard(Board);
+        getAndAssignPlayerPawns();
+        spawnPawns();
     }
 
     
@@ -272,6 +276,59 @@ public class GameManager : MonoBehaviour
 
                 string displayText = string.Format("State: {0}, Pawn: {1}, Card: {2}, Position: {3}", stateString, statePawn, cardName, position);
                 Debug.Log(displayText);
+            }
+        }
+    }
+
+    public void getAndAssignPlayerPawns() //Loads all of the prefab tiles and adds it into island deck list
+    {
+        var resources = Resources.LoadAll("PlayerPawns", typeof(GameObject));
+
+        foreach (GameObject obj in resources)
+        {
+            playerPawns.Add(obj);
+        }
+
+        int rand = Random.Range(0, playerPawns.Count-1);
+        player1.GetComponent<Player1>().pawn = playerPawns[rand];
+
+        rand = Random.Range(0, playerPawns.Count-1);
+        player2.GetComponent<Player2>().pawn = playerPawns[rand];
+
+        if (player1.GetComponent<Player1>().pawn == player2.GetComponent<Player2>().pawn)
+        {
+            if (rand == playerPawns.Count-1)
+            {
+                player2.GetComponent<Player2>().pawn = playerPawns[playerPawns.Count-1];
+            } else if (rand == 0) 
+            {
+                player2.GetComponent<Player2>().pawn = playerPawns[1];
+            }
+        }
+
+    }
+
+    public void spawnPawns()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                if (Board[i,j].pointState == PointState.Filled && Board[i,j].cardAtPoint.GetComponent<CardS>().card.playerSpawn == player1.GetComponent<Player1>().pawn.name)
+                {
+                    Instantiate(player1.GetComponent<Player1>().pawn, new Vector3(Board[i,j].cardPosition.x, Board[i, j].cardPosition.y, -1), Quaternion.identity);
+                }
+            }
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                if (Board[i, j].pointState == PointState.Filled && Board[i, j].cardAtPoint.GetComponent<CardS>().card.playerSpawn == player2.GetComponent<Player2>().pawn.name)
+                {
+                    Instantiate(player2.GetComponent<Player2>().pawn, new Vector3(Board[i, j].cardPosition.x, Board[i, j].cardPosition.y, -1), Quaternion.identity);
+                }
             }
         }
     }

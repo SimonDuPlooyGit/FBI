@@ -11,6 +11,7 @@ public class Player1 : MonoBehaviour
     public bool moveOtherPlayerTwoSpaces;
     public bool canDive;
     public bool canShoreTwice;
+    public bool canGiveCardsFar;
 
     // Start is called before the first frame update
     void Start()
