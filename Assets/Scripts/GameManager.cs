@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> discardedFloodCards = new List<GameObject>(); //List of cards that have been pulled from the flooding deck (Popped) gets shuffled and pushed back onto the stack
     public GameState gameState;
 
+
+
+   
+
     public enum PointState //An enum to define the different states a point can be in
     {
         Empty,
