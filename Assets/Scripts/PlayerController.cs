@@ -6,11 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject MoveButton;
-    public GameObject HandCardButton;
-    public GameObject SpecialAbButton;
-    public GameObject player;
-    public TextMeshProUGUI SpecialAbility;
+  
 
     // Start is called before the first frame update
     void Start()
