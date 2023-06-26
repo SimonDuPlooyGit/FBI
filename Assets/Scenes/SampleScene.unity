@@ -874,6 +874,7 @@ MonoBehaviour:
   islandTileDeck: []
   discardedFloodCards: []
   playerPawns: []
+  treasureCards: []
   player1: {fileID: 1344333815}
   player2: {fileID: 754858626}
 --- !u!224 &241978898
@@ -1286,7 +1287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1511,6 +1511,13 @@ MonoBehaviour:
   canDive: 0
   canShoreTwice: 0
   canGiveCardsFar: 0
+  treasureCardSlots:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  amountOfTreasureCards: 0
   SpecialAbility: {fileID: 1937393559}
   MoveButton: {fileID: 103573571}
   SpecialButton: {fileID: 2122897355}
@@ -3436,6 +3443,13 @@ MonoBehaviour:
   canDive: 0
   canShoreTwice: 0
   canGiveCardsFar: 0
+  treasureCardSlots:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  amountOfTreasureCards: 0
   SpecialAbility: {fileID: 2049962837}
   MoveButton: {fileID: 811526184}
   SpecialButton: {fileID: 31558358}

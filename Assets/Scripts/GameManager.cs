@@ -39,10 +39,13 @@ public class GameManager : MonoBehaviour
     private List<GameObject> floodDeck = new List<GameObject>(); //Same as above but for the flooding cards
     public Stack<GameObject> floodStack = new Stack<GameObject>(); //The actual deck representation for the flood deck. Stack to use Pop and Push (LIFO - for a deck)
     public List<GameObject> discardedFloodCards = new List<GameObject>(); //List of cards that have been pulled from the flooding deck (Popped) gets shuffled and pushed back onto the stack
-    public List<GameObject> playerPawns = new List<GameObject>();
+    public List<GameObject> playerPawns = new List<GameObject>(); //List to hold all of the possible player pawns that can be handed out/assigned
+    public List<GameObject> treasureCards; //List to hold all of the treasure cards
+    public Stack<GameObject> treasureStack = new Stack<GameObject>(); //Actual deck, same idea as for floodstack
 
     public GameObject player1;
     public GameObject player2;
+
     public enum PointState //An enum to define the different states a point can be in
     {
         Empty,
@@ -94,6 +97,12 @@ public class GameManager : MonoBehaviour
         //DisplayBoard(Board);
         getAndAssignPlayerPawns();
         spawnPawns();
+        createTreasureDeck();
+        shuffleTreasure();
+        createTreasureStack();
+        player1.GetComponent<Player1>().player1AssignHandSlots();
+        player2.GetComponent<Player2>().player2AssignHandSlots();
+        handOutTwoTreasureCardsStart();
     }
 
     
@@ -157,6 +166,7 @@ public class GameManager : MonoBehaviour
         discardedFloodCards.Add(floodStack.Pop()); //Only pops from the stack and adds to the discard list so far
     }
 
+
     public void shuffleFloodDiscard() //Repeat of she shuffle functions but for the discard pile of the flooding cards
     {
         for (int i = 0; i < discardedFloodCards.Count; i++)
@@ -165,6 +175,35 @@ public class GameManager : MonoBehaviour
             int randInd = Random.Range(i, discardedFloodCards.Count);
             discardedFloodCards[i] = discardedFloodCards[randInd];
             discardedFloodCards[randInd] = temporary;
+        }
+    }
+
+    public void createTreasureDeck()
+    {
+        var resources = Resources.LoadAll("TreasureCards", typeof(GameObject));
+
+        foreach (GameObject obj in resources)
+        {
+            treasureCards.Add(obj);
+        }
+    }
+
+    public void shuffleTreasure()
+    {
+        for (int i = 0; i < treasureCards.Count; i++)
+        {
+            GameObject temporary = treasureCards[i];
+            int randInd = Random.Range(i, treasureCards.Count);
+            treasureCards[i] = treasureCards[randInd];
+            treasureCards[randInd] = temporary;
+        }
+    }
+
+    public void createTreasureStack()
+    {
+        for (int i = 0; i < treasureCards.Count; i++)
+        {
+            treasureStack.Push(treasureCards[i]);
         }
     }
 
@@ -290,12 +329,12 @@ public class GameManager : MonoBehaviour
         }
 
         int rand = Random.Range(0, playerPawns.Count-1);
-        player1.GetComponent<Player1>().pawn = playerPawns[rand];
+        player1.GetComponent<Player1>().pawn = playerPawns[rand]; //Randomly assigns a pawn to player 1
 
         rand = Random.Range(0, playerPawns.Count-1);
         player2.GetComponent<Player2>().pawn = playerPawns[rand];
 
-        if (player1.GetComponent<Player1>().pawn == player2.GetComponent<Player2>().pawn)
+        if (player1.GetComponent<Player1>().pawn == player2.GetComponent<Player2>().pawn) //Checks to make sure that player 2 does not get the same pawn as player 1
         {
             if (rand == playerPawns.Count-1)
             {
@@ -308,7 +347,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void spawnPawns()
+    public void spawnPawns() //Loops through the board array and finds the filled point that has the same player spawn string value of the pawn to spawn's name
     {
         for (int i = 0; i < 6; i++)
         {
@@ -321,7 +360,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++) //Repeat the same for player 2
         {
             for (int j = 0; j < 6; j++)
             {
@@ -331,5 +370,24 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void handOutTwoTreasureCardsStart() 
+    {
+        Vector2 firstPlaceSpot = player1.GetComponent<Player1>().treasureCardSlots[player1.GetComponent<Player1>().amountOfTreasureCards];
+        Instantiate(treasureStack.Pop(), new Vector3(firstPlaceSpot.x, firstPlaceSpot.y, 0), Quaternion.identity);
+        player1.GetComponent<Player1>().amountOfTreasureCards++;
+
+        Vector2 secondPlaceSpot = player1.GetComponent<Player1>().treasureCardSlots[player1.GetComponent<Player1>().amountOfTreasureCards];
+        Instantiate(treasureStack.Pop(), new Vector3(secondPlaceSpot.x, secondPlaceSpot.y, 0), Quaternion.identity);
+        player1.GetComponent<Player1>().amountOfTreasureCards++;
+
+        firstPlaceSpot = player2.GetComponent<Player2>().treasureCardSlots[player2.GetComponent<Player2>().amountOfTreasureCards];
+        Instantiate(treasureStack.Pop(), new Vector3(firstPlaceSpot.x, firstPlaceSpot.y, 0), Quaternion.identity);
+        player2.GetComponent<Player2>().amountOfTreasureCards++;
+
+        secondPlaceSpot = player2.GetComponent<Player2>().treasureCardSlots[player2.GetComponent<Player2>().amountOfTreasureCards];
+        Instantiate(treasureStack.Pop(), new Vector3(secondPlaceSpot.x, secondPlaceSpot.y, 0), Quaternion.identity);
+        player2.GetComponent<Player2>().amountOfTreasureCards++;
     }
 }

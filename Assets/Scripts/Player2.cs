@@ -7,14 +7,19 @@ using UnityEngine.UI;
 
 public class Player2 : MonoBehaviour
 {
-    public GameObject pawn;
-    public Vector2 pawnPosition;
+    public GameObject pawn; //GameObject variable for a player's pawn
+    public Vector2 pawnPosition; //Vector 2 for the player's pawn position
     public bool moveAndShoreDiagonally;
     public bool moveToAnyTile;
     public bool moveOtherPlayerTwoSpaces;
     public bool canDive;
     public bool canShoreTwice;
-    public bool canGiveCardsFar;
+    public bool canGiveCardsFar; //Booleans to keep track of the special things a player can do
+
+    public Vector2[] treasureCardSlots = new Vector2[5]; //Array to store the points of where to display cards in a player's hand
+    public int amountOfTreasureCards = 0; //Int to keep track of the player's hand size
+
+    //Ako
     public TextMeshProUGUI SpecialAbility;
     public Button MoveButton;
     public Button SpecialButton;
@@ -24,8 +29,8 @@ public class Player2 : MonoBehaviour
     public int Actions = 3;
     public GameObject Player1Objects;
     public GameObject Player2Objects;
+    //Ako
 
-    // Start is called before the first frame update
     void Start()
     {
         moveAndShoreDiagonally = false;
@@ -34,7 +39,7 @@ public class Player2 : MonoBehaviour
         canDive = false;
         canShoreTwice = false;
 
-
+        //Ako
         if (Actions >= 1)
         {
             MoveButton.onClick.AddListener(TaskOnClick);
@@ -42,9 +47,19 @@ public class Player2 : MonoBehaviour
             GiveCardButton.onClick.AddListener(TaskOnClick);
             EndTurnButton.onClick.AddListener(EndTurn);
         }
+        //Ako
     }
 
-    // Update is called once per frame
+    public void player2AssignHandSlots()
+    {
+        treasureCardSlots[0] = new Vector2(-8f, -2.40f);
+        treasureCardSlots[1] = new Vector2(-7f, -2.40f);
+        treasureCardSlots[2] = new Vector2(-6f, -2.40f);
+        treasureCardSlots[3] = new Vector2(-5f, -2.40f);
+        treasureCardSlots[4] = new Vector2(-4f, -2.40f);
+    }
+
+    //Ako
     void Update()
     {
         ActionsLeft.text ="Actions Left: "+ Actions.ToString();
@@ -105,4 +120,5 @@ public class Player2 : MonoBehaviour
         Player2Objects.SetActive(false);
         Actions = 3;
     }
+    //Ako
 }
