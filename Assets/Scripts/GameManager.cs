@@ -103,12 +103,15 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<Player1>().player1AssignHandSlots();
         player2.GetComponent<Player2>().player2AssignHandSlots();
         handOutTwoTreasureCardsStart();
+        
     }
 
     
     void Update() //Not needed yet
     {
         
+
+
     }
 
     public void createIslandDeck() //Loads all of the prefab tiles and adds it into island deck list
@@ -390,4 +393,6 @@ public class GameManager : MonoBehaviour
         Instantiate(treasureStack.Pop(), new Vector3(secondPlaceSpot.x, secondPlaceSpot.y, 0), Quaternion.identity);
         player2.GetComponent<Player2>().amountOfTreasureCards++;
     }
+
+   
 }

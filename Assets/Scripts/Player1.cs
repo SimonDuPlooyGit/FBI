@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player1 : MonoBehaviour
 {
@@ -107,7 +108,7 @@ public class Player1 : MonoBehaviour
             EndTurn();
             //Next Player turn
         }
-
+        Movement();
     }
 
     void TaskOnClick()
@@ -121,4 +122,26 @@ public class Player1 : MonoBehaviour
         Actions = 3;
     }
     //Ako
+
+    public void Movement()
+    {
+        float X = pawnPosition.x;
+        float Y = pawnPosition.y;
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            pawn.transform.Translate(new Vector2(X + 0.5f, Y));
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            pawn.transform.Translate(new Vector2(X - 0.5f, Y));
+        }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            pawn.transform.Translate(new Vector2(X, Y + 0.5f));
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            pawn.transform.Translate(new Vector2(X, Y - 0.5f));
+        }
+    }
 }
